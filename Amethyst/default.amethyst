@@ -29,6 +29,10 @@
         "mod": "mod2",
         "key": "space"
     },
+    "toggle-layout": {
+        "mod": "mod2",
+        "key": "p"
+    },
     "select-tall-layout": {
         "mod": "mod1",
         "key": "a"

@@ -80,6 +80,11 @@ class HotKeyManager<Application: ApplicationType>: NSObject {
             screenManager?.cycleLayoutBackward()
         }
 
+        constructCommandWithCommandKey(CommandKey.toggleLayout.rawValue) {
+            let screenManager: ScreenManager<WindowManager<Application>>? = windowManager.focusedScreenManager()
+            screenManager?.toggleLayout()
+        }
+
         constructCommandWithCommandKey(CommandKey.shrinkMain.rawValue) {
             let screenManager: ScreenManager<WindowManager<Application>>? = windowManager.focusedScreenManager()
             screenManager?.updateCurrentLayout { layout in
@@ -216,6 +221,7 @@ class HotKeyManager<Application: ApplicationType>: NSObject {
                 screenManager?.selectLayout(layoutKey)
             }
         }
+
     }
 
     private func constructKeyCodeMap() -> [String: [AMKeyCode]] {
@@ -325,6 +331,7 @@ class HotKeyManager<Application: ApplicationType>: NSObject {
 
         hotKeyNameToDefaultsKey.append(["Cycle layout forward", CommandKey.cycleLayoutForward.rawValue])
         hotKeyNameToDefaultsKey.append(["Cycle layout backwards", CommandKey.cycleLayoutBackward.rawValue])
+        hotKeyNameToDefaultsKey.append(["Toggle layout", CommandKey.toggleLayout.rawValue])
         hotKeyNameToDefaultsKey.append(["Shrink main pane", CommandKey.shrinkMain.rawValue])
         hotKeyNameToDefaultsKey.append(["Expand main pane", CommandKey.expandMain.rawValue])
         hotKeyNameToDefaultsKey.append(["Increase main pane count", CommandKey.increaseMain.rawValue])

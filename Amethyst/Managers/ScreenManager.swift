@@ -38,6 +38,7 @@ final class ScreenManager<Delegate: ScreenManagerDelegate>: NSObject, Codable {
 
     private var layouts: [Layout<Window>] = []
     private var currentLayoutIndexBySpaceUUID: [String: Int] = [:]
+    private var lastLayoutIndexBySpaceUUID: [String: Int] = [:]
     private var layoutsBySpaceUUID: [String: [Layout<Window>]] = [:]
     private var currentLayoutIndex: Int = 0
     var currentLayout: Layout<Window>? {
@@ -235,11 +236,26 @@ final class ScreenManager<Delegate: ScreenManagerDelegate>: NSObject, Codable {
         setNeedsReflow(withWindowChange: .layoutChange)
     }
 
+    func toggleLayout() {
+
+        if let currentSpace = self.space {
+          if let lastLayoutIndex = lastLayoutIndexBySpaceUUID[currentSpace.uuid] {
+            setCurrentLayoutIndex(lastLayoutIndex)
+            setNeedsReflow(withWindowChange: .layoutChange)
+          }
+        }
+    }
+
     private func setCurrentLayoutIndex(_ index: Int, changingSpace: Bool = false) {
         guard (0..<layouts.count).contains(index) else {
             return
         }
 
+        if !changingSpace {
+          if let currentSpace = self.space {
+            lastLayoutIndexBySpaceUUID[currentSpace.uuid] = currentLayoutIndex
+          }
+        }
         currentLayoutIndex = index
 
         guard !changingSpace || userConfiguration.enablesLayoutHUDOnSpaceChange() else {

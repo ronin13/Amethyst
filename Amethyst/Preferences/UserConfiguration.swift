@@ -96,6 +96,7 @@ extension ConfigurationKey: CaseIterable {}
 enum CommandKey: String {
     case cycleLayoutForward = "cycle-layout"
     case cycleLayoutBackward = "cycle-layout-backward"
+    case toggleLayout = "toggle-layout"
     case shrinkMain = "shrink-main"
     case expandMain = "expand-main"
     case increaseMain = "increase-main"
